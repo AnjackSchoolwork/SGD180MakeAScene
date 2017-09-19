@@ -50,7 +50,7 @@ function getCtx() {
  * @param {object} ctx	Reference to the context of that canvas.
  */
 function mainLoop(canvas, ctx) {
-	redrawCanvas(canvas, ctx)
+	//redrawCanvas(canvas, ctx)
 	movePlayer()
 }
 
@@ -85,6 +85,39 @@ function makeRect(ctx, x, y, w, h, fill) {
 	else {
 		ctx.strokeRect(x, y, w, h)
 	}
+}
+
+function generateTree(ctx, x, y, tree_h) {
+	trunk_height = (tree_h / 7) * 6
+	trunk_width = trunk_height / 4
+	canopy_height = trunk_height / 3
+	canopy_width = 3 * trunk_width
+
+	makeTree(ctx, x, y, trunk_width, trunk_height, canopy_width, canopy_height)
+}
+
+/**
+ * Draws a simple tree-like shape. Will have a brown trunk and green canopy.
+ *
+ * @param {object} ctx
+ * @param {int} x			X-coordinate of bottom center of tree (trunk).
+ * @param {int} y			Y-coordinate of bottom center of tree (trunk).
+ * @param {int} trunk_w		Width of the trunk rectangle.
+ * @param {int} trunk_h		Height of the trunk rectangle.
+ * @param {int} canopy_w	Width of the ellipse at the top of the tree.
+ * @param {int} canopy_h	Height of the ellipse at the top of the tree.
+ */
+function makeTree(ctx, x, y, trunk_w, trunk_h, canopy_w, canopy_h) {
+	trunk_x = x - (trunk_w / 2)
+	trunk_y = y
+	canopy_x = x
+	canopy_y = y - trunk_h
+	makeRect(ctx, trunk_x, trunk_y, trunk_w, -trunk_h, "brown")
+	ctx.beginPath()
+	ctx.ellipse(canopy_x, canopy_y, canopy_w, canopy_h, 0, 0, 2 * Math.PI)
+	ctx.fillStyle = "#0CE868"
+	ctx.fill()
+	ctx.closePath()
 }
 
 /**
