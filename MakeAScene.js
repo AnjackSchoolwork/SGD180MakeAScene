@@ -124,7 +124,7 @@ function generateTreeStand(ctx, x, y, w, h, avg_h) {
 	for (var x_int = 0; x_int < grid_x_num; x_int++) {
 		for (var y_int = 0; y_int < grid_y_num; y_int++) {
 			if (Math.floor(Math.random() * 100) % 2) {
-				generateTree(ctx, (x * x_int) + (avg_width / 2), (y * y_int), -1 * avg_h)
+				generateTree(ctx, (x * x_int) + (avg_width / 2), (y * y_int), avg_h)
 			}
 		}
 	}
@@ -137,7 +137,6 @@ function generateTreeStand(ctx, x, y, w, h, avg_h) {
  */
 function randomOffset(num, offset) {
 	change_amt = Math.floor(Math.random() * offset)
-	console.log(change_amt)
 	return num + ((num / 100) * change_amt)
 }
 
