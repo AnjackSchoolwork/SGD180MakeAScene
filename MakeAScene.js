@@ -58,6 +58,7 @@ function mainLoop(canvas, ctx) {
  * Clears the canvas and redraws all objects at their
  * new positions.
  *
+ * @param {object} canvas Reference to the canvas being used.
  * @param {object} ctx	Reference to the context of canvas being used.
  */
 function redrawCanvas(canvas, ctx) {
@@ -69,7 +70,7 @@ function redrawCanvas(canvas, ctx) {
 
 /**
  * Draw a rectangle on the canvas.
- * 
+ *
  * @param {object} ctx	Reference to context of canvas being used.
  * @param {integer} x	X-coordinate.
  * @param {integer} y	Y-coordinate.
@@ -109,22 +110,23 @@ function generateTree(ctx, x, y, tree_h) {
 /**
  * Generates a rectangle group of trees with specified average height.
  * 
- * @param {object} ctx
- * @param {integer} x
- * @param {integer} y
- * @param {integer} w
- * @param {integer} h
- * @param {integer} avg_h
+ * @param {object} ctx		Reference to the context of the canvas being used.
+ * @param {integer} x		X-coordinate of lower-left corner.
+ * @param {integer} y		Y-coordinate of lower-left corner.
+ * @param {integer} w		Total width of the stand (to the base of the trees)
+ * @param {integer} h		Total height of the stand (to the base of the trees)
+ * @param {integer} avg_h	Average height of trees in the stand.
+ * @param {integer} density	How dense is the tree cover?
  */
 function generateTreeStand(ctx, x, y, w, h, avg_h) {
-	avg_width = Math.floor(avg_h / 4)
+	avg_width = Math.floor(avg_h / 4) * 2
 	grid_x_num = Math.floor(w / avg_width)
 	grid_y_num = Math.floor(h / avg_width)
 
-	for (var x_int = 0; x_int < grid_x_num; x_int++) {
-		for (var y_int = 0; y_int < grid_y_num; y_int++) {
-			if (Math.floor(Math.random() * 100) % 2) {
-				generateTree(ctx, (x * x_int) + (avg_width / 2), (y * y_int), avg_h)
+	for (var y_int = 0; y_int <= grid_y_num; y_int++) {
+		for (var x_int = 0; x_int <= grid_x_num; x_int++) {
+			if (Math.floor(Math.random() * 100) % 3 == 0) {
+				generateTree(ctx, x + (avg_width * x_int), y + (avg_width * y_int), avg_h)
 			}
 		}
 	}
@@ -164,6 +166,18 @@ function makeTree(ctx, x, y, trunk_w, trunk_h, canopy_w, canopy_h) {
 	ctx.strokeStyle = "#09AD4E"
 	ctx.stroke()
 	ctx.closePath()
+}
+
+/**
+ * Generates a house with a rectangular body, a square roof, some windows and a chimney.
+ * 
+ * @param {object} ctx	Reference to the context of the canvas being used.
+ * @param {integer} x	X-coordinate of lower-middle point on house.
+ * @param {integer} y	Y-coordinate of lower-middle point on house.
+ * @param {integer} h	Height of house from the ground to the peak of the roof.
+ */
+function makeHouse(ctx, x, y, h) {
+
 }
 
 /**
