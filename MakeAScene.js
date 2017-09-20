@@ -82,13 +82,17 @@ function makeRect(ctx, x, y, w, h, fill) {
 	if (fill != null) {
 		ctx.fillStyle = fill
 		ctx.fillRect(x, y, w, h)
-		ctx.strokeStyle = "#8A511D"
+		ctx.globalAlpha = 0.3
+		ctx.strokeStyle = "#000000"
 		ctx.strokeRect(x, y, w, h)
+		ctx.globalAlpha = 1
 	}
 	else {
 		ctx.strokeRect(x, y, w, h)
 	}
 }
+
+// TODO: need a makeTriangle method
 
 /**
  * Generates a tree of specified height.
@@ -186,8 +190,9 @@ function makeHouse(ctx, x, y, h) {
 	roof_x = box_x
 	roof_y = box_y - box_height
 	door_height = 4 * ((box_height / 2) / 5)
-	door_width = door_height / 3
+	door_width = door_height / 2
 	door_x = box_x + 10
+	door_y = box_y
 	window_square_height = box_height / 3
 	window_square_width = window_square_height
 	window_square_x = box_x + box_width - window_square_width - 10
@@ -206,9 +211,17 @@ function makeHouse(ctx, x, y, h) {
 	ctx.moveTo(roof_x, roof_y)
 	ctx.lineTo(roof_x + (roof_width / 2), roof_y - roof_height)
 	ctx.lineTo(roof_x+ roof_width, roof_y)
-	//ctx.lineTo(roof_x, roof_y)
 	ctx.fill()
+	ctx.globalAlpha = 0.3
+	ctx.strokeStyle = "#000000"
+	ctx.stroke()
+	ctx.globalAlpha = 1
 	ctx.closePath()
+	// Now a door
+	makeRect(ctx, door_x, door_y, door_width, -door_height, "#D1170D")
+	// Lower window
+	makeRect(ctx, window_square_x, window_square_y, window_square_width, -window_square_height, "#ffffff")
+
 }
 
 /**
