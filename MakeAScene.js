@@ -80,7 +80,7 @@ function redrawCanvas(canvas, ctx) {
  */
 function makeRect(ctx, x, y, w, h, fill) {
 	if (fill != null) {
-		ctx.fillStyle = "#BF7028"
+		ctx.fillStyle = fill
 		ctx.fillRect(x, y, w, h)
 		ctx.strokeStyle = "#8A511D"
 		ctx.strokeRect(x, y, w, h)
@@ -177,7 +177,38 @@ function makeTree(ctx, x, y, trunk_w, trunk_h, canopy_w, canopy_h) {
  * @param {integer} h	Height of house from the ground to the peak of the roof.
  */
 function makeHouse(ctx, x, y, h) {
+	box_height = 2 * (h / 3)
+	box_width = 3 * (h / 4)
+	box_x = x - (box_width / 2)
+	box_y = y
+	roof_height = (h / 3)
+	roof_width = box_width
+	roof_x = box_x
+	roof_y = box_y - box_height
+	door_height = 4 * ((box_height / 2) / 5)
+	door_width = door_height / 3
+	door_x = box_x + 10
+	window_square_height = box_height / 3
+	window_square_width = window_square_height
+	window_square_x = box_x + box_width - window_square_width - 10
+	window_square_y = box_y - window_square_height
+	chimney_width = roof_width / 6
+	chimney_x = roof_x + roof_width - chimney_width - 10
+	chimney_y = y - h
 
+	// Draw the chimney first
+	makeRect(ctx, chimney_x, chimney_y, chimney_width, roof_height, "#963311")
+	// Draw the main box next
+	makeRect(ctx, box_x, box_y, box_width, -box_height, "#023296")
+	// Then draw the roof
+	ctx.fillStyle = "#D1170D"
+	ctx.beginPath()
+	ctx.moveTo(roof_x, roof_y)
+	ctx.lineTo(roof_x + (roof_width / 2), roof_y - roof_height)
+	ctx.lineTo(roof_x+ roof_width, roof_y)
+	//ctx.lineTo(roof_x, roof_y)
+	ctx.fill()
+	ctx.closePath()
 }
 
 /**
