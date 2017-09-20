@@ -19,6 +19,8 @@ function setup() {
 
 	setInterval(function () { mainLoop(document.getElementById("mainCanvas"), getCtx()) }, 10)
 
+	drawScene(getCtx())
+
 	document.addEventListener('keydown', keyDownEvent)
 	document.addEventListener('keyup', keyUpEvent)
 	
@@ -51,6 +53,7 @@ function getCtx() {
  */
 function mainLoop(canvas, ctx) {
 	//redrawCanvas(canvas, ctx)
+	//drawScene(ctx)
 	movePlayer()
 }
 
@@ -66,6 +69,17 @@ function redrawCanvas(canvas, ctx) {
 	ctx.fillRect(0, 0, canvas.width, canvas.height)
 
 	drawPlayer(ctx)
+}
+
+/**
+ * Draws the scene.
+ * TODO: Load scene from file.
+ */
+function drawScene(ctx) {
+	makeHouse(ctx, 400, 300, 100)
+	generateTreeStand(ctx, 0, 0, 800, 100, 100)
+	generateTreeStand(ctx, 0, 100, 100, 600, 100)
+	generateTreeStand(ctx, 700, 100, 100, 600, 100)
 }
 
 /**
@@ -93,6 +107,7 @@ function makeRect(ctx, x, y, w, h, fill) {
 }
 
 /**
+ * Draw a circle on the canvas.
  *
  * @param {object} ctx	Reference to context of canvas beingg used.
  * @param {integer} x	X-coordinate of center of circle.
@@ -114,6 +129,25 @@ function makeCircle(ctx, x, y, r, fill) {
 	else {
 		ctx.stroke()
 	}
+}
+
+/**
+ * Draw a crossbeam (such as a window pane) on the canvas.
+ *
+ * @param {object} ctx	Reference to context of canvas being used.
+ * @param {integer} x	X-coordinate of lower-left corner of encompassing rectangle.
+ * @param {integer} y	Y-coordinate of lower-left corner of encompassing rectangle.
+ * @param {integer} w	Width of encompanssing rectangle.
+ * @param {integer} h	Height of encompassing rectangle.
+ * @param {color} fill	Fill color or null if no fill.
+ */
+function makeCrossBeam(ctx, x, y, w, h, fill) {
+	vert_beam_x = x + (w / 2) - (w / 10)
+	vert_beam_y = y
+	horiz_beam_x = x
+	horiz_beam_y = y + (h / 2) - (h / 10)
+	makeRect(ctx, vert_beam_x, vert_beam_y, w / 5, h, fill)
+	makeRect(ctx, horiz_beam_x, horiz_beam_y, w, h / 5, fill)
 }
 
 /*
@@ -141,8 +175,8 @@ function generateTree(ctx, x, y, tree_h) {
  * Generates a somewhat rectangular group of trees with specified average height.
  * 
  * @param {object} ctx		Reference to the context of the canvas being used.
- * @param {integer} x		X-coordinate of lower-left corner.
- * @param {integer} y		Y-coordinate of lower-left corner.
+ * @param {integer} x		X-coordinate of upper-left corner.
+ * @param {integer} y		Y-coordinate of upper-left corner.
  * @param {integer} w		Total width of the stand (to the base of the trees)
  * @param {integer} h		Total height of the stand (to the base of the trees)
  * @param {integer} avg_h	Average height of trees in the stand.
@@ -251,6 +285,7 @@ function makeHouse(ctx, x, y, h) {
 	makeRect(ctx, door_x, door_y, door_width, -door_height, "#D1170D")
 	// Lower window
 	makeRect(ctx, window_square_x, window_square_y, window_square_width, -window_square_height, "#ffffff")
+	makeCrossBeam(ctx, window_square_x, window_square_y, window_square_width, -window_square_height, "#ffffff")
 	// Upper window
 	makeCircle(ctx, window_circle_x, window_circle_y, window_circle_radius, "#ffffff")
 }

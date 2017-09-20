@@ -1,3 +1,15 @@
-﻿body
-{
+﻿body {
+
+}
+
+#mainContainer {
+    margin: 0 auto;
+    padding: 0;
+    text-align: center;
+}
+
+#mainCanvas {
+    margin: 0 auto;
+    padding: 0;
+    border-style: solid;
 }
