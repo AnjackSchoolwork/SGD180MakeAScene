@@ -92,7 +92,33 @@ function makeRect(ctx, x, y, w, h, fill) {
 	}
 }
 
-// TODO: need a makeTriangle method
+/**
+ *
+ * @param {object} ctx	Reference to context of canvas beingg used.
+ * @param {integer} x	X-coordinate of center of circle.
+ * @param {integer} y	Y-coordinate of center of circle.
+ * @param {integer} r	Radius of circle.
+ * @param {color} fill	Fill color or null if no fill.
+ */
+function makeCircle(ctx, x, y, r, fill) {
+	ctx.strokeStyle = "#000000"
+	ctx.beginPath()
+	ctx.arc(x, y, r, 0, 2 * Math.PI)
+	if (fill != null) {
+		ctx.fillStyle = fill
+		ctx.fill()
+		ctx.globalAlpha = 0.3
+		ctx.stroke()
+		ctx.globalAlpha = 1
+	}
+	else {
+		ctx.stroke()
+	}
+}
+
+/*
+ * TODO: need a makeTriangle method
+ */
 
 /**
  * Generates a tree of specified height.
@@ -112,7 +138,7 @@ function generateTree(ctx, x, y, tree_h) {
 }
 
 /**
- * Generates a rectangle group of trees with specified average height.
+ * Generates a somewhat rectangular group of trees with specified average height.
  * 
  * @param {object} ctx		Reference to the context of the canvas being used.
  * @param {integer} x		X-coordinate of lower-left corner.
@@ -173,7 +199,8 @@ function makeTree(ctx, x, y, trunk_w, trunk_h, canopy_w, canopy_h) {
 }
 
 /**
- * Generates a house with a rectangular body, a square roof, some windows and a chimney.
+ * Big, ugly method that generates a house with a rectangular body,
+ * a triangle roof, some windows and a chimney.
  * 
  * @param {object} ctx	Reference to the context of the canvas being used.
  * @param {integer} x	X-coordinate of lower-middle point on house.
@@ -195,8 +222,11 @@ function makeHouse(ctx, x, y, h) {
 	door_y = box_y
 	window_square_height = box_height / 3
 	window_square_width = window_square_height
-	window_square_x = box_x + box_width - window_square_width - 10
+	window_square_x = box_x + door_width + 10 + ((box_width - door_width - 10) / 2) - (window_square_width / 2)
 	window_square_y = box_y - window_square_height
+	window_circle_x = roof_x + (roof_width / 2)
+	window_circle_y = roof_y - ((roof_height / 8) * 3)
+	window_circle_radius = roof_height / 4
 	chimney_width = roof_width / 6
 	chimney_x = roof_x + roof_width - chimney_width - 10
 	chimney_y = y - h
@@ -221,7 +251,8 @@ function makeHouse(ctx, x, y, h) {
 	makeRect(ctx, door_x, door_y, door_width, -door_height, "#D1170D")
 	// Lower window
 	makeRect(ctx, window_square_x, window_square_y, window_square_width, -window_square_height, "#ffffff")
-
+	// Upper window
+	makeCircle(ctx, window_circle_x, window_circle_y, window_circle_radius, "#ffffff")
 }
 
 /**
