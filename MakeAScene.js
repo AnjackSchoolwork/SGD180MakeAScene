@@ -17,6 +17,13 @@ var player = {
 function setup() {
 	loadConfig()
 
+	// This is a temporary hack. Need a better option.
+	bgImage = new Image()
+	bgImage.src = "img/grass_texture_800x800.jpg"
+	bgImage.onload = function () {
+		document.getElementById("backgroundCanvas").getContext("2d").drawImage(bgImage, 0, 0)
+	}
+
 	setInterval(function () { mainLoop(document.getElementById("mainCanvas"), getCtx()) }, 10)
 
 	drawScene(getCtx())
@@ -65,8 +72,8 @@ function mainLoop(canvas, ctx) {
  * @param {object} ctx	Reference to the context of canvas being used.
  */
 function redrawCanvas(canvas, ctx) {
-	ctx.fillStyle = "#ffffff"
-	ctx.fillRect(0, 0, canvas.width, canvas.height)
+
+	ctx.clearRect(0, 0, canvas.width, canvas.height)
 
 	drawPlayer(ctx)
 }
@@ -76,8 +83,17 @@ function redrawCanvas(canvas, ctx) {
  * TODO: Load scene from file.
  */
 function drawScene(ctx) {
+	// Let's draw a little dirt path, first.
+	makeRect(ctx, 380, 300, 40, 300, "#ADAA09")
+	makeCircle(ctx, 400, 275, 75, "#ADAA09")
+	// HAX!
+	ctx.fillStyle = "#ADAA09"
+	ctx.fillRect(380, 320, 40, 50)
+	
 	makeHouse(ctx, 400, 300, 100)
-	generateTreeStand(ctx, 0, 0, 800, 100, 100)
+
+	// Happy little trees!
+	generateTreeStand(ctx, 0, 0, 800, 150, 100)
 	generateTreeStand(ctx, 0, 100, 100, 600, 100)
 	generateTreeStand(ctx, 700, 100, 100, 600, 100)
 }
