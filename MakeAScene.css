@@ -4,8 +4,19 @@
 
 #mainContainer {
     margin: 0 auto;
-    padding: 0;
     text-align: center;
+    height: 600px;
+}
+
+#informationContainer {
+    margin: 0 auto;
+    margin-top: 20px;
+    text-align: center;
+}
+
+#controlList {
+    margin: 0 auto;
+    text-align: left;
 }
 
 canvas {

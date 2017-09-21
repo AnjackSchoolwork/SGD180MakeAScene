@@ -101,6 +101,16 @@ function drawScene(ctx) {
 }
 
 /**
+ * 
+ *
+ * @param {object} ctx		Reference to context of canvas being used.
+ * @param {string} text		Text to display.
+ */
+function drawTitle(ctx, text) {
+	
+}
+
+/**
  * Draw a rectangle on the canvas.
  *
  * @param {object} ctx	Reference to context of canvas being used.
