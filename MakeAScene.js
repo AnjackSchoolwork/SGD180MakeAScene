@@ -37,6 +37,8 @@ function setup() {
 
 	drawScene(getCtx("topCanvas"))
 
+	drawTitle(getCtx("topCanvas"), "Make A Scene")
+
 	document.addEventListener('keydown', keyDownEvent)
 	document.addEventListener('keyup', keyUpEvent)
 	
@@ -101,13 +103,21 @@ function drawScene(ctx) {
 }
 
 /**
- * 
+ * Draw title text on the canvas (top-center alignment).
+ *
+ * TODO: Add more parameters for greater customization.
  *
  * @param {object} ctx		Reference to context of canvas being used.
  * @param {string} text		Text to display.
  */
 function drawTitle(ctx, text) {
-	
+	ctx.font="24px Arial Bold"
+
+	ctx.textAlign = "center"
+
+	ctx.fillStyle ="#000000"
+
+	ctx.fillText(text, 400, 40)
 }
 
 /**
