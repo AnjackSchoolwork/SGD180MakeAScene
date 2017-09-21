@@ -3,8 +3,8 @@
  * The player object.
  */
 var player = {
-	"x": 0,
-	"y": 0,
+	"x": 400,
+	"y": 330,
 	"w": 10,
 	"h": 10,
 	"move_x": 0,
@@ -21,12 +21,21 @@ function setup() {
 	bgImage = new Image()
 	bgImage.src = "img/grass_texture_800x800.jpg"
 	bgImage.onload = function () {
+		// The grass texture.
 		document.getElementById("backgroundCanvas").getContext("2d").drawImage(bgImage, 0, 0)
+
+		// Let's draw a little dirt path, first.
+		ctx_bg = document.getElementById("backgroundCanvas").getContext("2d")
+		makeRect(ctx_bg, 380, 300, 40, 300, "#ADAA09")
+		makeCircle(ctx_bg, 400, 275, 75, "#ADAA09")
+		// HAX!
+		ctx_bg.fillStyle = "#ADAA09"
+		ctx_bg.fillRect(380, 320, 40, 50)
 	}
 
-	setInterval(function () { mainLoop(document.getElementById("mainCanvas"), getCtx()) }, 10)
+	setInterval(function () { mainLoop(document.getElementById("topCanvas"), getCtx("topCanvas")) }, 10)
 
-	drawScene(getCtx())
+	drawScene(getCtx("topCanvas"))
 
 	document.addEventListener('keydown', keyDownEvent)
 	document.addEventListener('keyup', keyUpEvent)
@@ -47,9 +56,9 @@ function loadConfig() {
 	pMove['speed'] = 5
 }
 
-function getCtx() {
-	mainCanvas = document.getElementById("mainCanvas")
-	return mainCanvas.getContext("2d")
+function getCtx(canvasId) {
+	tempCanvas = document.getElementById(canvasId)
+	return tempCanvas.getContext("2d")
 }
 
 /**
@@ -59,8 +68,7 @@ function getCtx() {
  * @param {object} ctx	Reference to the context of that canvas.
  */
 function mainLoop(canvas, ctx) {
-	//redrawCanvas(canvas, ctx)
-	//drawScene(ctx)
+	redrawCanvas(canvas, getCtx("mainCanvas"))
 	movePlayer()
 }
 
@@ -83,19 +91,13 @@ function redrawCanvas(canvas, ctx) {
  * TODO: Load scene from file.
  */
 function drawScene(ctx) {
-	// Let's draw a little dirt path, first.
-	makeRect(ctx, 380, 300, 40, 300, "#ADAA09")
-	makeCircle(ctx, 400, 275, 75, "#ADAA09")
-	// HAX!
-	ctx.fillStyle = "#ADAA09"
-	ctx.fillRect(380, 320, 40, 50)
 	
 	makeHouse(ctx, 400, 300, 100)
 
 	// Happy little trees!
 	generateTreeStand(ctx, 0, 0, 800, 150, 100)
-	generateTreeStand(ctx, 0, 100, 100, 600, 100)
-	generateTreeStand(ctx, 700, 100, 100, 600, 100)
+	generateTreeStand(ctx, 0, 150, 150, 600, 100)
+	generateTreeStand(ctx, 650, 150, 150, 600, 100)
 }
 
 /**
@@ -326,7 +328,9 @@ function movePlayer() {
  * @param {context} ctx
  */
 function drawPlayer(ctx) {
-	makeRect(ctx, player["x"], player["y"], player["w"], player["h"], "#000000")
+	//makeRect(ctx, player["x"], player["y"], player["w"], player["h"], "#000000")
+	makeCircle(ctx, player["x"], player["y"], player["w"], "#E36A0B")
+
 }
 
 /**
